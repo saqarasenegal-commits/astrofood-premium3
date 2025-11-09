@@ -328,6 +328,12 @@
           <option value="equilibre">Équilibre / mois actuel</option>
           <option value="fatigue">Fatigue physique</option>
           <option value="moral_bas">Moral bas / stress</option>
+          <option value="digestion">Problèmes de digestion</option>
+          <option value="detox">Detox</option>
+          <option value="metabolisme">Métabolisme</option>
+          <option value="immunite">Immunité</option>
+          <option value="energy_booster">Booster d’énergie</option>
+          <option value="stress_relief">anti-stress</option>
         </select>
       </div>
       <div style="display:flex; align-items:flex-end;">
@@ -410,9 +416,9 @@ function getLangKey(l) {
 /* (TRONQUÉ DANS LE FICHIER -> on reconstruit même structure) */
 const ASTRO_DB = {
   "aries": {
-    "equilibre": {
+    "equilibre": { 
       fr: { title: "Bélier – énergie maîtrisée", prevention:"Bois de l’eau, plats tièdes.", petit_dej:"Bouillie de mil coco-dattes", dejeuner:"Yassa poulet citronné + riz complet", diner:"Poisson vapeur et légumes racines" },
-      en: { title: "Aries – balanced fire", prevention:"Drink water, eat warm light food.", petit_dej:"Millet porridge with coconut & dates", dejeuner:"Light chicken yassa + brown rice", diner:"Steamed fish with roots" },
+      en: { title: "Aries – balanced fire", prevention:"Drink water, eat warm light food.", petit_dej:"Millet porridge with coconut & dates", dejeuner:"Light chicken yassa + brown rice", diner:"Steamed fish with roots" }, 
       ar: { title: "الحمل – طاقة متوازنة", prevention:"اشرب ماء وتناول طعامًا دافئًا.", petit_dej:"عصيدة دخن بحليب جوز الهند والتمر", dejeuner:"ياسا دجاج خفيف + أرز كامل", diner:"سمك مطهوّ على البخار بخضار" }
     },
     "fatigue": {
@@ -424,7 +430,12 @@ const ASTRO_DB = {
       fr: { title:"Bélier – Moral en baisse", prevention:"Lumière du soleil.", petit_dej:"Pain complet + miel + tisane", dejeuner:"Poulet grillé + salade quinoa", diner:"Riz au lait de coco" },
       en: { title:"Aries – low mood", prevention:"Get sun.", petit_dej:"Whole bread + honey", dejeuner:"Grilled chicken + quinoa", diner:"Coconut rice pudding" },
       ar: { title:"الحمل – مزاج منخفض", prevention:"تعرّض للشمس.", petit_dej:"خبز كامل بالعسل", dejeuner:"دجاج مشوي + كينوا", diner:"أرز بحليب جوز الهند" }
-    }
+    },
+   "detox" : {
+      fr: { title:"Bélier – Moral en baisse", prevention:"Lumière du soleil.", petit_dej:"Pain complet + miel + tisane", dejeuner:"Poulet grillé + salade quinoa", diner:"Riz au lait de coco" },
+      en: { title:"Aries – low mood", prevention:"Get sun.", petit_dej:"Whole bread + honey", dejeuner:"Grilled chicken + quinoa", diner:"Coconut rice pudding" },
+      ar: { title:"الحمل – مزاج منخفض", prevention:"تعرّض للشمس.", petit_dej:"خبز كامل بالعسل", dejeuner:"دجاج مشوي + كينوا", diner:"أرز بحليب جوز الهند" }
+     
   },
   "taurus": {
     "equilibre": {
@@ -616,150 +627,1146 @@ const ASTRO_DB = {
 };
 
 /* === 3. Base éducative (extraits) ============================= */
+
+/***************************************************
+ *  ASTRO_EDU_DB – Recettes éducatives trilingues
+ ***************************************************/
 const ASTRO_EDU_DB = {
   "aries": {
     fr: {
       title: "Bélier – Recharger le feu intérieur",
       petit_dej: {
         nom: "Bouillie d'avoine au gingembre et miel",
-        ingredients: ["60 g d’avoine","200 ml lait végétal","1 c.à c. gingembre","1 c.à s. miel","1 pincée cannelle"],
-        preparation: ["Chauffer le lait + avoine 8–10 min.","Ajouter gingembre + miel.","Servir chaud."],
-        cuisson: "Cuisson douce à feu moyen.",
+        ingredients: [
+          "60 g d’avoine", "200 ml de lait végétal", "1 c. à c. de gingembre frais", "1 c. à s. de miel", "1 pincée de cannelle"
+        ],
+        preparation: [
+          "Chauffez le lait, ajoutez l’avoine, laissez épaissir 8–10 min.",
+          "Incorporez gingembre et miel hors du feu, puis saupoudrez de cannelle."
+        ],
+        cuisson: "Cuisson douce à feu moyen : stimule Mars sans épuiser l’énergie.",
         calories: 320
       },
       dejeuner: {
         nom: "Poulet citronné et riz complet",
-        ingredients: ["1 filet de poulet","½ citron","150 g riz complet","huile d’olive","thym","sel"],
-        preparation: ["Mariner 20 min.","Dorer puis mijoter.","Servir avec le riz."],
-        cuisson: "Cuisson équilibrée, canalise Mars.",
+        ingredients: [
+          "1 filet de poulet", "½ citron", "150 g de riz complet", "huile d’olive", "thym", "sel"
+        ],
+        preparation: [
+          "Marine le poulet avec citron, huile, thym (20 min).",
+          "Fais-le dorer puis mijote avec un peu d’eau.",
+          "Servez avec le riz complet."
+        ],
+        cuisson: "Cuisson équilibrée : canalise l’énergie du Bélier.",
         calories: 540
       },
       diner: {
         nom: "Soupe de carotte et gingembre",
-        ingredients: ["3 carottes","½ oignon","1 c.à c. gingembre","200 ml eau","sel"],
-        preparation: ["Revenir l’oignon.","Ajouter carotte + eau, cuire 20 min.","Mixer avec gingembre."],
-        cuisson: "Vapeur douce.",
+        ingredients: ["3 carottes", "½ oignon", "1 c. à c. de gingembre", "200 ml d’eau", "sel"],
+        preparation: [
+          "Faites revenir l’oignon, ajoutez carottes + eau, cuisez 20 min.",
+          "Mixez avec le gingembre."
+        ],
+        cuisson: "Vapeur douce : adoucit le feu intérieur.",
         calories: 180
       }
     },
     en: {
       title: "Aries – Reignite your inner fire",
-      petit_dej: { nom:"Oat porridge with ginger & honey", ingredients:["60 g oats","200 ml plant milk","ginger","honey","cinnamon"], preparation:["Cook 8–10 min.","Stir in ginger, honey."], cuisson:"Gentle heat.", calories:320 },
-      dejeuner: { nom:"Lemon chicken with brown rice", ingredients:["Chicken fillet","lemon","brown rice","olive oil","thyme"], preparation:["Marinate 20 min.","Sear, simmer.","Serve with rice."], cuisson:"Medium heat.", calories:540 },
-      diner: { nom:"Carrot ginger soup", ingredients:["Carrots","onion","ginger","water"], preparation:["Sauté onion.","Simmer 20 min.","Blend."], cuisson:"Soft steaming.", calories:180 }
+      petit_dej: {
+        nom: "Oat porridge with ginger and honey",
+        ingredients: [
+          "60 g oats", "200 ml plant milk", "1 tsp fresh ginger", "1 tbsp honey", "Pinch of cinnamon"
+        ],
+        preparation: [
+          "Heat milk, add oats, simmer 8–10 min until thick.",
+          "Stir in ginger and honey, sprinkle cinnamon."
+        ],
+        cuisson: "Gentle heat: reawakens Mars energy calmly.",
+        calories: 320
+      },
+      dejeuner: {
+        nom: "Lemon chicken with brown rice",
+        ingredients: [
+          "1 chicken fillet", "½ lemon", "150 g brown rice", "olive oil", "thyme", "salt"
+        ],
+        preparation: [
+          "Marinate chicken 20 min with lemon, oil, thyme.",
+          "Sear then simmer briefly with water.",
+          "Serve with rice."
+        ],
+        cuisson: "Medium heat maintains Aries vitality.",
+        calories: 540
+      },
+      diner: {
+        nom: "Carrot-ginger soup",
+        ingredients: ["3 carrots", "½ onion", "1 tsp ginger", "200 ml water", "salt"],
+        preparation: [
+          "Sauté onion, add carrots + water, cook 20 min.",
+          "Blend with ginger."
+        ],
+        cuisson: "Soft steaming calms fiery energy.",
+        calories: 180
+      }
     },
     ar: {
-      title: "الحمل – إشعال النار الداخلية",
-      petit_dej: { nom:"عصيدة شوفان بالزنجبيل والعسل", ingredients:["شوفان","حليب نباتي","زنجبيل","عسل","قرفة"], preparation:["يُطهى 10 دقائق.","يُضاف الزنجبيل والعسل."], cuisson:"طهي لطيف.", calories:320 },
-      dejeuner: { nom:"دجاج بالليمون مع أرز كامل", ingredients:["دجاج","ليمون","أرز بني"], preparation:["تتبيل 20 دقيقة.","طهي.","تقديم مع الأرز."], cuisson:"طهي متوسط.", calories:540 },
-      diner: { nom:"شوربة جزر وزنجبيل", ingredients:["جزر","بصل","زنجبيل","ماء"], preparation:["يُطهى 20 دقيقة.","يُخلط."], cuisson:"بخار ناعم.", calories:180 }
+      title: "الحمل – إشعال النار الداخلية من جديد",
+      petit_dej: {
+        nom: "عصيدة الشوفان بالزنجبيل والعسل",
+        ingredients: ["60 غ شوفان", "200 مل حليب نباتي", "ملعقة صغيرة زنجبيل طازج", "ملعقة كبيرة عسل", "رشة قرفة"],
+        preparation: [
+          "سخّن الحليب وأضف الشوفان واطهه 8-10 دقائق.",
+          "أضف الزنجبيل والعسل ورش القرفة قبل التقديم."
+        ],
+        cuisson: "طهي لطيف يحفّز طاقة المريخ دون إنهاكها.",
+        calories: 320
+      },
+      dejeuner: {
+        nom: "دجاج بالليمون مع أرز كامل",
+        ingredients: ["صدر دجاج", "½ ليمونة", "150 غ أرز بني", "زيت زيتون", "زعتر", "ملح"],
+        preparation: [
+          "تتبيل الدجاج بالليمون والزيت والزعتر 20 دقيقة.",
+          "تحميره ثم طهيه مع قليل من الماء.",
+          "يُقدَّم مع الأرز الكامل."
+        ],
+        cuisson: "طهي معتدل يوازن طاقة برج الحمل.",
+        calories: 540
+      },
+      diner: {
+        nom: "شوربة الجزر والزنجبيل",
+        ingredients: ["3 جزر", "½ بصلة", "ملعقة زنجبيل صغيرة", "200 مل ماء", "ملح"],
+        preparation: [
+          "يُقلى البصل ثم تُضاف الجزر والماء وتُطهى 20 دقيقة.",
+          "تُخلط مع الزنجبيل وتُقدَّم دافئة."
+        ],
+        cuisson: "طهي بالبخار يحافظ على الهدوء الداخلي.",
+        calories: 180
+      }
     }
   },
+  
   "taurus": {
     fr: {
       title: "Taureau – Stabilité et plaisir vénusien",
       petit_dej: {
         nom: "Thiakry léger au lait caillé",
-        ingredients:["80 g mil cuit","150 ml lait caillé","1 c.s. miel","vanille","cannelle"],
-        preparation:["Mélanger mil + lait.","Sucrer, vanille.","Servir frais."],
-        cuisson:"Sans cuisson.",
+        ingredients: [
+          "80 g de mil cuit",
+          "150 ml de lait caillé (ou yaourt nature)",
+          "1 c. à s. de sucre brun ou miel",
+          "1 pincée de vanille",
+          "Cannelle (facultatif)"
+        ],
+        preparation: [
+          "Mélangez le mil cuit avec le lait caillé.",
+          "Ajoutez la vanille et sucrez légèrement.",
+          "Servez frais avec une pointe de cannelle."
+        ],
+        cuisson: "Pas de cuisson : préparation à froid qui apaise le Taureau et respecte son besoin de confort.",
         calories: 280
       },
       dejeuner: {
         nom: "Mafé végétarien allégé",
-        ingredients:["2 c.s. pâte d’arachide","1 tomate","1 carotte","½ oignon","huile","eau"],
-        preparation:["Revenir oignon.","Ajouter tomate, réduire.","Ajouter légumes + eau.","Délayer arachide.","Mijoter 25–30 min."],
-        cuisson:"Cuisson lente Taureau.",
+        ingredients: [
+          "2 c. à s. de pâte d’arachide",
+          "1 tomate fraîche ou 1 c. à s. de concentré",
+          "1 carotte en rondelles",
+          "½ oignon émincé",
+          "1 c. à s. d’huile",
+          "Sel, poivre",
+          "Eau (200–300 ml)"
+        ],
+        preparation: [
+          "Faites revenir l’oignon dans l’huile.",
+          "Ajoutez la tomate et laissez réduire.",
+          "Ajoutez les légumes et un verre d’eau.",
+          "Délayez la pâte d’arachide dans un peu d’eau et versez.",
+          "Laissez mijoter 25 à 30 min jusqu’à sauce liée."
+        ],
+        cuisson: "Cuisson lente à feu doux : très adaptée au Taureau, signe de Terre, qui assimile mieux les plats mijotés.",
         calories: 460
       },
       diner: {
-        nom: "Poisson au four + patate douce",
-        ingredients:["1 filet poisson","½ patate douce","huile d’olive","citron","sel"],
-        preparation:["Préchauffer 180°C.","Assaisonner poisson + patate.","Cuire 20–25 min."],
-        cuisson:"Rôtissage doux.",
+        nom: "Poisson au four et patate douce rôtie",
+        ingredients: [
+          "1 filet de poisson blanc",
+          "½ patate douce",
+          "1 c. à s. d’huile d’olive",
+          "1 c. à c. de jus de citron",
+          "Poivre noir, sel"
+        ],
+        preparation: [
+          "Préchauffez le four à 180°C.",
+          "Badigeonnez le poisson d’huile, citron, sel et poivre.",
+          "Coupez la patate en tranches et disposez-les à côté.",
+          "Enfournez 20–25 min."
+        ],
+        cuisson: "Rôtissage doux au four : donne une énergie stable en fin de journée sans alourdir.",
         calories: 510
       }
     },
     en: {
       title: "Taurus – Stability and Venus pleasure",
-      petit_dej: { nom:"Light thiakry", ingredients:["Cooked millet","fermented milk","honey","vanilla"], preparation:["Mix and chill."], cuisson:"No cook.", calories:280 },
-      dejeuner: { nom:"Light vegetarian peanut stew", ingredients:["Peanut paste","tomato","carrot","onion","water"], preparation:["Sauté onion.","Add tomato + veg.","Dilute peanut and simmer."], cuisson:"Slow simmer.", calories:460 },
-      diner: { nom:"Baked fish with roasted sweet potato", ingredients:["Fish fillet","sweet potato","oil","lemon"], preparation:["Season, bake 20–25 min."], cuisson:"Gentle oven.", calories:510 }
+      petit_dej: {
+        nom: "Light thiakry with fermented milk",
+        ingredients: [
+          "80 g cooked millet",
+          "150 ml fermented milk / yogurt",
+          "1 tbsp brown sugar or honey",
+          "Pinch of vanilla",
+          "Cinnamon (optional)"
+        ],
+        preparation: [
+          "Mix millet with fermented milk.",
+          "Sweeten lightly and add vanilla.",
+          "Serve chilled with a touch of cinnamon."
+        ],
+        cuisson: "No cooking: cooling breakfast that calms Taurus and supports digestion.",
+        calories: 280
+      },
+      dejeuner: {
+        nom: "Light vegetarian peanut stew",
+        ingredients: [
+          "2 tbsp peanut paste",
+          "1 tomato or 1 tbsp concentrate",
+          "1 carrot",
+          "½ onion",
+          "Oil, salt, pepper",
+          "Water"
+        ],
+        preparation: [
+          "Sauté onion, add tomato and reduce.",
+          "Add vegetables and water.",
+          "Dilute peanut paste and pour in.",
+          "Simmer 25–30 min."
+        ],
+        cuisson: "Slow simmer: matches Taurus’ slow but steady metabolism.",
+        calories: 460
+      },
+      diner: {
+        nom: "Baked fish with roasted sweet potato",
+        ingredients: [
+          "1 white fish fillet",
+          "½ sweet potato",
+          "Olive oil",
+          "Lemon juice",
+          "Salt, pepper"
+        ],
+        preparation: [
+          "Preheat oven to 180°C.",
+          "Season fish and slice sweet potato.",
+          "Bake 20–25 min."
+        ],
+        cuisson: "Gentle oven cooking: grounding, ideal for Earth signs.",
+        calories: 510
+      }
     },
     ar: {
-      title: "الثور – الاستقرار واللذة",
-      petit_dej: { nom:"ثياكري خفيف", ingredients:["دخن مطبوخ","لبن رائب","عسل"], preparation:["يُخلط ويُقدّم بارداً."], cuisson:"بدون طهي.", calories:280 },
-      dejeuner: { nom:"مافي نباتي خفيف", ingredients:["معجون فول سوداني","طماطم","جزر","بصل"], preparation:["يُقلى البصل.","تُضاف الطماطم ثم الخضار.","يُضاف الفول ويُطهى."], cuisson:"طهي بطيء.", calories:460 },
-      diner: { nom:"سمك بالفرن مع بطاطا حلوة", ingredients:["سمك","بطاطا","زيت","ليمون"], preparation:["يُتبّل ويُخبَز 25 دقيقة."], cuisson:"شوي معتدل.", calories:510 }
+      title: "الثور – الاستقرار واللذة تحت تأثير الزهرة",
+      petit_dej: {
+        nom: "ثياكري خفيف باللبن الرائب",
+        ingredients: [
+          "80 غ دخن مطبوخ",
+          "150 مل لبن رائب أو زبادي",
+          "ملعقة عسل أو سكر بني",
+          "رشة فانيلا",
+          "قرفة (اختياري)"
+        ],
+        preparation: [
+          "يُخلط الدخن المطبوخ مع اللبن.",
+          "يُحلّى ويُنكّه بالفانيلا.",
+          "يُقدّم بارداً مع رشة قرفة."
+        ],
+        cuisson: "بدون طهي: يحافظ على هدوء برج الثور ويعطيه إفطارًا مريحًا.",
+        calories: 280
+      },
+      dejeuner: {
+        nom: "مافي نباتي خفيف",
+        ingredients: [
+          "ملعقتان كبيرتان معجون فول سوداني",
+          "1 طماطم أو ملعقة معجون طماطم",
+          "1 جزرة مقطعة",
+          "½ بصلة",
+          "زيت، ملح، فلفل",
+          "ماء"
+        ],
+        preparation: [
+          "يُقلى البصل في الزيت.",
+          "تُضاف الطماطم وتُترك لتتسبك.",
+          "تُضاف الخضار والماء.",
+          "يُخفَّف معجون الفول السوداني ويُضاف.",
+          "يُطهى على نار هادئة 25–30 دقيقة."
+        ],
+        cuisson: "طهي بطيء يناسب طبيعة الثور الهادئة ويُسهِّل الهضم.",
+        calories: 460
+      },
+      diner: {
+        nom: "سمك بالفرن مع بطاطا حلوة مشوية",
+        ingredients: [
+          "شريحة سمك أبيض",
+          "½ بطاطا حلوة",
+          "زيت زيتون",
+          "عصير ليمون",
+          "ملح وفلفل"
+        ],
+        preparation: [
+          "يُسخّن الفرن على 180°. ",
+          "يُتبّل السمك ويُقطع البطاطا.",
+          "يُدخل الفرن 20–25 دقيقة."
+        ],
+        cuisson: "شوي معتدل يمنح طاقة أرضية ثابتة دون ثقل.",
+        calories: 510
+      }
     }
   },
+
   "gemini": {
     fr: {
-      title: "Gémeaux – Légèreté de Mercure",
-      petit_dej: { nom:"Smoothie mangue-banane-menthe", ingredients:["½ mangue","1 banane","menthe","eau de coco"], preparation:["Mixer tous les ingrédients."], cuisson:"Aucune cuisson.", calories:210 },
-      dejeuner: { nom:"Salade quinoa pois chiches", ingredients:["80 g quinoa","100 g pois chiches","légumes grillés"], preparation:["Cuire quinoa, griller légumes, mélanger."], cuisson:"Cuisson courte.", calories:420 },
-      diner: { nom:"Soupe miso tofu-gingembre", ingredients:["400 ml eau","1 c.s. miso","100 g tofu","gingembre"], preparation:["Chauffer eau + gingembre.","Ajouter tofu.","Hors feu, ajouter miso."], cuisson:"Chauffe douce.", calories:190 }
+      title: "Gémeaux – Légèreté et vivacité de Mercure",
+      petit_dej: {
+        nom: "Smoothie mangue-banane-menthe",
+        ingredients: [
+          "½ mangue",
+          "1 banane",
+          "5 feuilles de menthe",
+          "150 ml d’eau de coco"
+        ],
+        preparation: [
+          "Mixez tous les ingrédients jusqu’à texture onctueuse.",
+          "Servez frais pour stimuler l’esprit."
+        ],
+        cuisson: "Aucune cuisson : parfait pour les signes d’Air qui ont besoin de rapidité.",
+        calories: 210
+      },
+      dejeuner: {
+        nom: "Salade quinoa pois chiches et légumes grillés",
+        ingredients: [
+          "80 g de quinoa",
+          "100 g de pois chiches cuits",
+          "½ poivron",
+          "½ courgette",
+          "huile d’olive, citron, sel"
+        ],
+        preparation: [
+          "Faites cuire le quinoa.",
+          "Grillez poivron et courgette.",
+          "Assemblez le tout avec pois chiches et assaisonnement."
+        ],
+        cuisson: "Cuisson courte + légumes grillés = énergie rapide sans alourdir.",
+        calories: 420
+      },
+      diner: {
+        nom: "Soupe miso tofu-gingembre",
+        ingredients: [
+          "400 ml d’eau",
+          "1 c. à s. de pâte miso",
+          "100 g de tofu",
+          "1 c. à c. de gingembre",
+          "oignon vert"
+        ],
+        preparation: [
+          "Chauffez l’eau avec le gingembre sans faire bouillir.",
+          "Ajoutez le tofu en dés.",
+          "Hors du feu, ajoutez le miso pour préserver ses enzymes."
+        ],
+        cuisson: "Chauffe douce sans ébullition : bonne pour le système nerveux du Gémeaux.",
+        calories: 190
+      }
     },
     en: {
-      title: "Gemini – Mercury clarity",
-      petit_dej: { nom:"Mango-banana-mint smoothie", ingredients:["Mango","banana","mint","coconut water"], preparation:["Blend and serve."], cuisson:"No cook.", calories:210 },
-      dejeuner: { nom:"Quinoa salad with chickpeas", ingredients:["Quinoa","chickpeas","grilled veggies"], preparation:["Cook, grill, mix."], cuisson:"Short cooking.", calories:420 },
-      diner: { nom:"Miso soup with tofu", ingredients:["Water","miso","tofu","ginger"], preparation:["Heat water, add tofu, dissolve miso."], cuisson:"Gentle.", calories:190 }
+      title: "Gemini – Lightness and Mercury clarity",
+      petit_dej: {
+        nom: "Mango-banana-mint smoothie",
+        ingredients: ["½ mango","1 banana","5 mint leaves","150 ml coconut water"],
+        preparation: [
+          "Blend everything until smooth.",
+          "Serve chilled to boost mental clarity."
+        ],
+        cuisson: "No cooking – fast and airy, perfect for Gemini.",
+        calories: 210
+      },
+      dejeuner: {
+        nom: "Quinoa salad with chickpeas & grilled veggies",
+        ingredients: [
+          "80 g quinoa",
+          "100 g cooked chickpeas",
+          "½ bell pepper",
+          "½ zucchini",
+          "Olive oil, lemon, salt"
+        ],
+        preparation: [
+          "Cook quinoa, grill veggies, mix everything, season."
+        ],
+        cuisson: "Short cooking keeps energy light.",
+        calories: 420
+      },
+      diner: {
+        nom: "Miso soup with tofu and ginger",
+        ingredients: ["400 ml water","1 tbsp miso","100 g tofu","ginger","green onion"],
+        preparation: [
+          "Heat water with ginger.",
+          "Add tofu.",
+          "Off the heat, dissolve miso."
+        ],
+        cuisson: "Gentle heating to protect miso benefits.",
+        calories: 190
+      }
     },
     ar: {
-      title: "الجوزاء – خفة عطارد",
-      petit_dej: { nom:"سموثي مانجو وموز ونعناع", ingredients:["مانجو","موز","نعناع","ماء جوز هند"], preparation:["يُخلط ويُقدّم بارداً."], cuisson:"بدون طهي.", calories:210 },
-      dejeuner: { nom:"سلطة كينوا بالحمص", ingredients:["كينوا","حمص","خضار مشوية"], preparation:["تُسلق الكينوا وتُخلط بالخضار."], cuisson:"طهي قصير.", calories:420 },
-      diner: { nom:"شوربة ميزو بالتوفو", ingredients:["ماء","ميزو","توفو","زنجبيل"], preparation:["يُسخّن الماء ويُضاف التوفو ثم الميزو."], cuisson:"تسخين لطيف.", calories:190 }
+      title: "الجوزاء – خفة ووضوح عطارد",
+      petit_dej: {
+        nom: "سموثي مانجو وموز ونعناع",
+        ingredients: ["½ مانجو","1 موزة","5 أوراق نعناع","150 مل ماء جوز الهند"],
+        preparation: [
+          "يُخلط كل شيء حتى يصبح ناعماً.",
+          "يُقدّم بارداً لتنشيط الذهن."
+        ],
+        cuisson: "بدون طهي: مناسب لبرج هوائي سريع.",
+        calories: 210
+      },
+      dejeuner: {
+        nom: "سلطة كينوا بالحمص والخضار المشوية",
+        ingredients: [
+          "80غ كينوا",
+          "100غ حمص مسلوق",
+          "½ فلفل حلو",
+          "½ كوسة",
+          "زيت زيتون، ليمون، ملح"
+        ],
+        preparation: [
+          "تُسلق الكينوا.",
+          "تُشوى الخضار.",
+          "تُخلط المكونات وتُتبل."
+        ],
+        cuisson: "طهي قصير يحافظ على خفة الطاقة.",
+        calories: 420
+      },
+      diner: {
+        nom: "شوربة ميزو بالتوفو والزنجبيل",
+        ingredients: ["400 مل ماء","ملعقة ميزو","100غ توفو","زنجبيل","بصل أخضر"],
+        preparation: [
+          "يُسخّن الماء مع الزنجبيل بدون غلي.",
+          "يُضاف التوفو.",
+          "بعد إطفاء النار يُضاف الميزو."
+        ],
+        cuisson: "تسخين لطيف يحافظ على الفوائد ويهدئ الأعصاب.",
+        calories: 190
+      }
     }
   },
+
   "cancer": {
     fr: {
-      title: "Cancer – Douceur lunaire",
-      petit_dej: { nom:"Crème de riz au lait de coco", ingredients:["Riz rond","lait de coco","sucre","vanille"], preparation:["Cuire riz dans lait coco.","Sucrer, vanille."], cuisson:"Cuisson lente et douce.", calories:340 },
-      dejeuner: { nom:"Poisson vapeur et légumes verts", ingredients:["Poisson","brocoli","haricots verts"], preparation:["Cuire à la vapeur 10–12 min.","Assaisonner légèrement."], cuisson:"Vapeur douce.", calories:410 },
-      diner: { nom:"Soupe potiron-coco", ingredients:["Potiron","lait coco","gingembre"], preparation:["Cuire potiron et mixer avec coco."], cuisson:"Cuisson homogène.", calories:250 }
+      title: "Cancer – Douceur et protection lunaire",
+      petit_dej: {
+        nom: "Crème de riz au lait de coco",
+        ingredients: [
+          "60 g de riz rond",
+          "200 ml de lait de coco",
+          "1 c. à s. de sucre de canne",
+          "1 pincée de vanille"
+        ],
+        preparation: [
+          "Faites cuire le riz dans le lait de coco jusqu’à texture crémeuse.",
+          "Sucrez et ajoutez la vanille."
+        ],
+        cuisson: "Cuisson lente et douce : rassure le Cancer, signe d’Eau émotif.",
+        calories: 340
+      },
+      dejeuner: {
+        nom: "Poisson vapeur et légumes verts",
+        ingredients: [
+          "1 filet de poisson blanc",
+          "brocoli",
+          "haricots verts",
+          "sel, huile d’olive"
+        ],
+        preparation: [
+          "Faites cuire poisson et légumes à la vapeur 10–12 min.",
+          "Assaisonnez légèrement."
+        ],
+        cuisson: "Vapeur douce : digestion facile, pas d’agression pour l’estomac.",
+        calories: 410
+      },
+      diner: {
+        nom: "Soupe potiron-coco apaisante",
+        ingredients: [
+          "200 g de potiron",
+          "100 ml de lait de coco",
+          "1 c. à c. de gingembre",
+          "sel"
+        ],
+        preparation: [
+          "Faites cuire le potiron dans l’eau.",
+          "Mixez avec lait de coco et gingembre.",
+          "Rectifiez l’assaisonnement."
+        ],
+        cuisson: "Cuisson homogène et onctueuse : apporte chaleur émotionnelle au Cancer.",
+        calories: 250
+      }
     },
     en: {
-      title: "Cancer – Lunar comfort",
-      petit_dej: { nom:"Coconut rice cream", ingredients:["Rice","coconut milk","sugar"], preparation:["Cook until creamy."], cuisson:"Slow.", calories:340 },
-      dejeuner: { nom:"Steamed fish & greens", ingredients:["Fish","broccoli","green beans"], preparation:["Steam 10–12 min."], cuisson:"Steaming.", calories:410 },
-      diner: { nom:"Pumpkin-coconut soup", ingredients:["Pumpkin","coconut milk","ginger"], preparation:["Boil, blend."], cuisson:"Soft warm.", calories:250 }
+      title: "Cancer – Lunar comfort and softness",
+      petit_dej: {
+        nom: "Coconut rice cream",
+        ingredients: ["60 g round rice","200 ml coconut milk","1 tbsp cane sugar","vanilla"],
+        preparation: [
+          "Cook rice in coconut milk until creamy.",
+          "Sweeten and add vanilla."
+        ],
+        cuisson: "Slow gentle cooking = Cancer comfort food.",
+        calories: 340
+      },
+      dejeuner: {
+        nom: "Steamed fish with green veggies",
+        ingredients: ["1 fish fillet","broccoli","green beans","salt","olive oil"],
+        preparation: [
+          "Steam fish and veggies 10–12 min.",
+          "Season lightly."
+        ],
+        cuisson: "Steaming keeps it easy on digestion.",
+        calories: 410
+      },
+      diner: {
+        nom: "Soothing pumpkin-coconut soup",
+        ingredients: ["200 g pumpkin","100 ml coconut milk","ginger","salt"],
+        preparation: [
+          "Boil pumpkin until soft.",
+          "Blend with coconut milk and ginger."
+        ],
+        cuisson: "Soft, warm, protective for Water signs.",
+        calories: 250
+      }
     },
     ar: {
-      title: "السرطان – دفء قمري",
-      petit_dej: { nom:"كريمة أرز بحليب جوز الهند", ingredients:["أرز","حليب جوز الهند","سكر"], preparation:["يُطهى حتى يصبح كريميًا."], cuisson:"طهي بطيء.", calories:340 },
-      dejeuner: { nom:"سمك على البخار مع خضار", ingredients:["سمك","بروكلي","فاصوليا"], preparation:["يُطهى على البخار."], cuisson:"بخار لطيف.", calories:410 },
-      diner: { nom:"شوربة قرع بجوز الهند", ingredients:["قرع","حليب جوز الهند","زنجبيل"], preparation:["يُطهى ويُخلط."], cuisson:"طهي ناعم.", calories:250 }
+      title: "السرطان – دفء وراحة قمرية",
+      petit_dej: {
+        nom: "كريمة أرز بحليب جوز الهند",
+        ingredients: ["60غ أرز دائري","200 مل حليب جوز الهند","ملعقة سكر قصب","فانيلا"],
+        preparation: [
+          "يُطهى الأرز في حليب جوز الهند حتى يصبح كريميًا.",
+          "يُحلّى ويُنكّه."
+        ],
+        cuisson: "طهي بطيء يمنح شعورًا بالأمان لبرج السرطان.",
+        calories: 340
+      },
+      dejeuner: {
+        nom: "سمك على البخار مع خضار خضراء",
+        ingredients: ["شريحة سمك","بروكلي","فاصوليا خضراء","ملح، زيت زيتون"],
+        preparation: [
+          "تُطهى المكونات على البخار 10–12 دقيقة.",
+          "تُتبّل بخفة."
+        ],
+        cuisson: "بخار لطيف يحافظ على الهضم ويُهدئ.",
+        calories: 410
+      },
+      diner: {
+        nom: "شوربة قرع بجوز الهند مهدّئة",
+        ingredients: ["200غ قرع","100 مل حليب جوز الهند","زنجبيل","ملح"],
+        preparation: [
+          "يُطهى القرع ويُخلط مع حليب جوز الهند والزنجبيل.",
+          "يُقدّم دافئًا."
+        ],
+        cuisson: "طهي ناعم يمنح طاقة دافئة قبل النوم.",
+        calories: 250
+      }
     }
   },
-  "boissons": {
-    fr: {
-      title: "Boissons universelles – Vitalité et équilibre",
-      recettes: [
-        { nom:"Bissap (hibiscus rouge)", effet:"Tonique et antioxydant", ingredients:["Hibiscus","sucre roux","menthe","eau"], preparation:["Faire bouillir 10 min, filtrer, refroidir."] },
-        { nom:"Bouye (fruit du baobab)", effet:"Vitamine C, immunité", ingredients:["Poudre de bouye","lait","sucre","vanille"], preparation:["Mélanger à froid, servir frais."] },
-        { nom:"Gingembre-citron", effet:"Digestif et réchauffant", ingredients:["Gingembre","citron","miel","eau chaude"], preparation:["Infuser 10 min, ajouter citron + miel."] }
-      ]
+
+"virgo": {
+  fr: {
+    title: "Vierge – Pureté et clarté digestive",
+    petit_dej: {
+      nom: "Porridge avoine-pomme-cannelle",
+      ingredients: ["50 g flocons d’avoine","½ pomme râpée","200 ml lait végétal","1 c. à c. cannelle","1 c. à c. miel"],
+      preparation: [
+        "Chauffez le lait, ajoutez les flocons et la pomme râpée.",
+        "Laissez épaissir 8–10 min et sucrez au miel."
+      ],
+      cuisson: "Cuisson douce pour réveiller la digestion en douceur.",
+      calories: 310
     },
-    en: {
-      title: "Universal drinks – vitality & balance",
-      recettes: [
-        { nom:"Bissap (red hibiscus)", effet:"Antioxidant tonic", ingredients:["Dried hibiscus","brown sugar","mint","water"], preparation:["Boil 10 min, strain, cool."] },
-        { nom:"Bouye (baobab)", effet:"High in vit C", ingredients:["Baobab powder","milk","sugar","vanilla"], preparation:["Mix cold, serve chilled."] },
-        { nom:"Ginger-lemon", effet:"Digestive + warming", ingredients:["Fresh ginger","lemon","honey","hot water"], preparation:["Infuse 10 min, add."] }
-      ]
+    dejeuner: {
+      nom: "Légumes vapeur et riz basmati",
+      ingredients: ["100 g riz basmati","brocoli","carotte","huile d’olive","citron","sel"],
+      preparation: [
+        "Faites cuire le riz et les légumes à la vapeur.",
+        "Servez avec filet d’huile et jus de citron."
+      ],
+      cuisson: "Vapeur purifiante : équilibre l’intestin et la concentration.",
+      calories: 420
     },
-    ar: {
-      title: "المشروبات العالمية – الحيوية والتوازن",
-      recettes: [
-        { nom:"بيساب (الكركديه)", effet:"منشّط ومضاد للأكسدة", ingredients:["كركديه","سكر بني","نعناع","ماء"], preparation:["يُغلى 10 دقائق ويُبرّد."] },
-        { nom:"بووي (الباوباب)", effet:"غني بفيتامين C", ingredients:["مسحوق باوباب","حليب","سكر","فانيلا"], preparation:["يُخلط باردًا ويُقدّم."] },
-        { nom:"زنجبيل-ليمون", effet:"منشّط للهضم", ingredients:["زنجبيل","ليمون","عسل","ماء ساخن"], preparation:["يُنقع 10 دقائق ويُحلّى."] }
-      ]
+    diner: {
+      nom: "Soupe verte détox menthe-courgette",
+      ingredients: ["1 courgette","feuilles de menthe","1 pomme verte","eau","sel"],
+      preparation: ["Cuire courgette et pomme 15 min, mixer avec menthe."],
+      cuisson: "Cuisson légère, idéale avant le sommeil pour détox douce.",
+      calories: 180
+    }
+  },
+  en: {
+    title: "Virgo – Purity and digestive clarity",
+    petit_dej: {
+      nom: "Apple-cinnamon oatmeal",
+      ingredients: ["50 g oats","½ apple grated","200 ml plant milk","1 tsp cinnamon","1 tsp honey"],
+      preparation: ["Cook oats with milk and apple 8–10 min.","Sweeten with honey."],
+      cuisson: "Gentle cooking for smooth morning digestion.",
+      calories: 310
+    },
+    dejeuner: {
+      nom: "Steamed vegetables with basmati rice",
+      ingredients: ["100 g basmati rice","broccoli","carrot","olive oil","lemon","salt"],
+      preparation: ["Steam vegetables and cook rice.","Drizzle oil and lemon."],
+      cuisson: "Light steam supports mental focus.",
+      calories: 420
+    },
+    diner: {
+      nom: "Mint-zucchini detox soup",
+      ingredients: ["1 zucchini","mint leaves","1 green apple","water","salt"],
+      preparation: ["Boil zucchini and apple, blend with mint."],
+      cuisson: "Soft boiling – evening detox for Virgo.",
+      calories: 180
+    }
+  },
+  ar: {
+    title: "العذراء – النقاء وصفاء الهضم",
+    petit_dej: {
+      nom: "شوفان بالتفاح والقرفة",
+      ingredients: ["50غ شوفان","½ تفاحة مبشورة","200 مل حليب نباتي","ملعقة قرفة صغيرة","عسل"],
+      preparation: [
+        "يُطهى الشوفان بالحليب والتفاح 8–10 دقائق.",
+        "يُحلّى بالعسل."
+      ],
+      cuisson: "طهي لطيف يُهيّئ المعدة ليوم متوازن.",
+      calories: 310
+    },
+    dejeuner: {
+      nom: "خضار مطهية على البخار مع أرز بسمتي",
+      ingredients: ["100غ أرز بسمتي","بروكلي","جزر","زيت زيتون","ليمون","ملح"],
+      preparation: ["تُطهى المكونات على البخار وتُقدّم مع الزيت والليمون."],
+      cuisson: "بخار خفيف ينقّي الجسم ويهدّئ الأعصاب.",
+      calories: 420
+    },
+    diner: {
+      nom: "شوربة كوسة ونعناع مزيلة للسموم",
+      ingredients: ["كوسة","تفاح أخضر","نعناع","ماء","ملح"],
+      preparation: ["يُغلى ثم يُخلط مع النعناع ويُقدّم دافئاً."],
+      cuisson: "طهي بسيط ينقّي ويُريح قبل النوم.",
+      calories: 180
     }
   }
-};
+},
+
+"libra": {
+  fr: {
+    title: "Balance – Harmonie et beauté intérieure",
+    petit_dej: {
+      nom: "Toast avocat et citron",
+      ingredients: ["1 tranche pain complet","½ avocat","jus de citron","graines de sésame"],
+      preparation: ["Écrasez l’avocat, étalez sur le pain, ajoutez citron et graines."],
+      cuisson: "Toaster léger pour énergie douce du matin.",
+      calories: 280
+    },
+    dejeuner: {
+      nom: "Taboulé oriental à la menthe",
+      ingredients: ["100 g semoule fine","tomate","concombre","menthe","citron","huile"],
+      preparation: ["Mélangez tous les ingrédients, laissez reposer 15 min."],
+      cuisson: "Préparation à froid : équilibre et fraîcheur.",
+      calories: 390
+    },
+    diner: {
+      nom: "Soupe de lentilles corail au cumin",
+      ingredients: ["80 g lentilles corail","½ oignon","cumin","huile","sel"],
+      preparation: ["Cuire lentilles 20 min avec épices et mixer."],
+      cuisson: "Cuisson lente harmonise les émotions.",
+      calories: 320
+    }
+  },
+  en: {
+    title: "Libra – Harmony and inner beauty",
+    petit_dej: {
+      nom: "Avocado toast with lemon",
+      ingredients: ["1 slice whole bread","½ avocado","lemon juice","sesame seeds"],
+      preparation: ["Mash avocado, spread, sprinkle lemon and sesame."],
+      cuisson: "Light toast – calm and balanced morning.",
+      calories: 280
+    },
+    dejeuner: {
+      nom: "Mint oriental tabbouleh",
+      ingredients: ["100 g semolina","tomato","cucumber","mint","lemon","oil"],
+      preparation: ["Mix all, rest 15 min to absorb flavors."],
+      cuisson: "Cold prep – perfect for harmony-seeking Libra.",
+      calories: 390
+    },
+    diner: {
+      nom: "Red lentil soup with cumin",
+      ingredients: ["80 g red lentils","½ onion","cumin","oil","salt"],
+      preparation: ["Boil lentils 20 min with spices, blend smooth."],
+      cuisson: "Soft heat – inner peace through food.",
+      calories: 320
+    }
+  },
+  ar: {
+    title: "الميزان – التوازن والجمال الداخلي",
+    petit_dej: {
+      nom: "توست بالأفوكادو والليمون",
+      ingredients: ["شريحة خبز كامل","½ أفوكادو","عصير ليمون","سمسم"],
+      preparation: ["يُهرس الأفوكادو ويوضع على الخبز ويُرش الليمون والسمسم."],
+      cuisson: "تحميص خفيف يمنح طاقة هادئة.",
+      calories: 280
+    },
+    dejeuner: {
+      nom: "تبولة شرقية بالنعناع",
+      ingredients: ["100غ سميد ناعم","طماطم","خيار","نعناع","ليمون","زيت"],
+      preparation: ["تُخلط المكونات وتُترك 15 دقيقة لتتشرب النكهات."],
+      cuisson: "تحضير بارد يحقق توازن برج الميزان.",
+      calories: 390
+    },
+    diner: {
+      nom: "شوربة عدس أحمر بالكمون",
+      ingredients: ["80غ عدس","½ بصلة","كمون","زيت","ملح"],
+      preparation: ["تُطهى المكونات 20 دقيقة وتُخلط."],
+      cuisson: "طهي لطيف يمنح هدوءاً داخلياً.",
+      calories: 320
+    }
+  }
+},
+
+"scorpio": {
+  fr: {
+    title: "Scorpion – Régénération et puissance maîtrisée",
+    petit_dej: {
+      nom: "Jus de betterave et citron",
+      ingredients: ["1 petite betterave","½ citron","1 c. à c. miel","eau"],
+      preparation: ["Mixez tout, buvez frais pour stimuler le sang."],
+      cuisson: "Aucune cuisson : active Mars intérieur.",
+      calories: 140
+    },
+    dejeuner: {
+      nom: "Curry de lentilles et épinards",
+      ingredients: ["100 g lentilles","épinards","oignon","ail","curcuma","huile"],
+      preparation: ["Faites revenir l’oignon, ajoutez les lentilles et épices.","Cuire 25 min."],
+      cuisson: "Cuisson intense mais équilibrée, symbole du Scorpion.",
+      calories: 470
+    },
+    diner: {
+      nom: "Soupe de carottes et curcuma",
+      ingredients: ["2 carottes","curcuma","eau","sel"],
+      preparation: ["Cuire carottes 20 min, mixer avec curcuma."],
+      cuisson: "Cuisson longue purifiante.",
+      calories: 210
+    }
+  },
+  en: {
+    title: "Scorpio – Regeneration and controlled power",
+    petit_dej: {
+      nom: "Beetroot-lemon juice",
+      ingredients: ["1 beetroot","½ lemon","1 tsp honey","water"],
+      preparation: ["Blend all, drink chilled to purify blood."],
+      cuisson: "No cooking – raw vitality for Scorpio.",
+      calories: 140
+    },
+    dejeuner: {
+      nom: "Spinach lentil curry",
+      ingredients: ["100 g lentils","spinach","onion","garlic","turmeric","oil"],
+      preparation: ["Sauté onion, add lentils, spices, simmer 25 min."],
+      cuisson: "Steady heat harnesses intensity.",
+      calories: 470
+    },
+    diner: {
+      nom: "Carrot-turmeric soup",
+      ingredients: ["2 carrots","turmeric","water","salt"],
+      preparation: ["Boil 20 min, blend smooth."],
+      cuisson: "Cleansing, soothing night meal.",
+      calories: 210
+    }
+  },
+  ar: {
+    title: "العقرب – التجدد والقوة المتحكَّم بها",
+    petit_dej: {
+      nom: "عصير شمندر وليمون",
+      ingredients: ["شمندر صغير","½ ليمونة","ملعقة عسل","ماء"],
+      preparation: ["تُخلط المكونات وتُشرب باردة لتنقية الدم."],
+      cuisson: "بدون طهي: طاقة خام لبرج العقرب.",
+      calories: 140
+    },
+    dejeuner: {
+      nom: "كاري عدس وسبانخ",
+      ingredients: ["100غ عدس","سبانخ","بصل","ثوم","كركم","زيت"],
+      preparation: ["يُقلى البصل ثم تُضاف العدس والبهارات وتُطهى 25 دقيقة."],
+      cuisson: "حرارة ثابتة توازن قوة العقرب.",
+      calories: 470
+    },
+    diner: {
+      nom: "شوربة جزر وكركم",
+      ingredients: ["جزر","كركم","ماء","ملح"],
+      preparation: ["يُطهى الجزر ويُخلط حتى يصبح ناعماً."],
+      cuisson: "طهي مطهّر يمنح هدوءاً ليلياً.",
+      calories: 210
+    }
+  }
+},
+
+"sagittarius": {
+  fr: {
+    title: "Sagittaire – Expansion et feu intérieur",
+    petit_dej: {
+      nom: "Pancakes banane avoine",
+      ingredients: ["1 banane","60 g flocons d’avoine","1 œuf","miel"],
+      preparation: ["Mixez tout, cuisez 2–3 min par face à la poêle."],
+      cuisson: "Chaleur vive : réveille l’énergie aventureuse.",
+      calories: 350
+    },
+    dejeuner: {
+      nom: "Poulet tandoori léger",
+      ingredients: ["1 filet poulet","yaourt","épices tandoori","citron"],
+      preparation: ["Marinez 1h puis cuisez au four 25 min."],
+      cuisson: "Feu vif maîtrisé – nourrit le feu du Sagittaire.",
+      calories: 500
+    },
+    diner: {
+      nom: "Soupe tomate-coco piment doux",
+      ingredients: ["2 tomates","lait coco","piment doux","sel"],
+      preparation: ["Cuire tomates, mixer avec lait coco et piment."],
+      cuisson: "Douceur épicée : équilibre feu et détente.",
+      calories: 240
+    }
+  },
+  en: {
+    title: "Sagittarius – Expansion and inner fire",
+    petit_dej: {
+      nom: "Banana-oat pancakes",
+      ingredients: ["1 banana","60 g oats","1 egg","honey"],
+      preparation: ["Blend all, cook 2–3 min each side."],
+      cuisson: "Active flame for morning motivation.",
+      calories: 350
+    },
+    dejeuner: {
+      nom: "Light tandoori chicken",
+      ingredients: ["1 chicken fillet","yogurt","tandoori spices","lemon"],
+      preparation: ["Marinate 1h, bake 25 min."],
+      cuisson: "Strong but balanced fire energy.",
+      calories: 500
+    },
+    diner: {
+      nom: "Tomato-coconut mild chili soup",
+      ingredients: ["2 tomatoes","coconut milk","mild chili","salt"],
+      preparation: ["Boil tomatoes, blend with coconut milk and chili."],
+      cuisson: "Warm, creative, adventurous dinner.",
+      calories: 240
+    }
+  },
+  ar: {
+    title: "القوس – التوسع والنار الداخلية",
+    petit_dej: {
+      nom: "بان كيك بالموز والشوفان",
+      ingredients: ["موزة","60غ شوفان","بيضة","عسل"],
+      preparation: ["تُخلط المكونات وتُطهى دقيقتين لكل جانب."],
+      cuisson: "حرارة متوسطة تنشّط طاقة القوس.",
+      calories: 350
+    },
+    dejeuner: {
+      nom: "دجاج تندوري خفيف",
+      ingredients: ["صدر دجاج","لبن زبادي","بهارات تندوري","ليمون"],
+      preparation: ["يُنقع ساعة ثم يُطهى في الفرن 25 دقيقة."],
+      cuisson: "نار متوازنة تغذي روح القوس النارية.",
+      calories: 500
+    },
+    diner: {
+      nom: "شوربة طماطم بحليب جوز الهند والفلفل الحلو",
+      ingredients: ["طماطمتان","حليب جوز الهند","فلفل حلو","ملح"],
+      preparation: ["تُطهى الطماطم وتُخلط بالحليب والفلفل."],
+      cuisson: "دفء لطيف واسترخاء ليلي.",
+      calories: 240
+    }
+  }
+   
+},
+
+/* CAPRICORNE ♑ */
+"capricorn": {
+  fr: {
+    title: "Capricorne – Structure et endurance",
+    petit_dej: {
+      nom: "Porridge quinoa-datte-cacao",
+      ingredients: [
+        "60 g quinoa", "200 ml lait végétal", "2 dattes", "1 c. à c. cacao", "pincée de cannelle"
+      ],
+      preparation: [
+        "Faites cuire le quinoa dans le lait 15 min.",
+        "Ajoutez dattes mixées, cacao et cannelle."
+      ],
+      cuisson: "Cuisson longue qui soutient la concentration et la rigueur du Capricorne.",
+      calories: 350
+    },
+    dejeuner: {
+      nom: "Ragoût de bœuf aux légumes racines",
+      ingredients: [
+        "150 g bœuf", "carottes", "navets", "oignon", "herbes", "huile"
+      ],
+      preparation: [
+        "Faites revenir l’oignon et la viande.",
+        "Ajoutez légumes et herbes, laissez mijoter 45 min."
+      ],
+      cuisson: "Cuisson lente, parfaite pour recharger l’énergie durablement.",
+      calories: 520
+    },
+    diner: {
+      nom: "Soupe d’orge et poireaux",
+      ingredients: ["60 g orge", "1 poireau", "eau", "huile", "sel"],
+      preparation: ["Faites cuire l’orge 30 min, ajoutez poireau émincé, laissez mijoter."],
+      cuisson: "Douce chaleur nourrissante pour le soir.",
+      calories: 260
+    }
+  },
+  en: {
+    title: "Capricorn – Structure and endurance",
+    petit_dej: {
+      nom: "Quinoa porridge with dates and cocoa",
+      ingredients: ["60 g quinoa","200 ml plant milk","2 dates","1 tsp cocoa","cinnamon"],
+      preparation: ["Cook quinoa 15 min in milk, add blended dates, cocoa, cinnamon."],
+      cuisson: "Slow cooking for focus and stability.",
+      calories: 350
+    },
+    dejeuner: {
+      nom: "Beef stew with root vegetables",
+      ingredients: ["150 g beef","carrot","turnip","onion","herbs","oil"],
+      preparation: ["Sear beef, add vegetables, simmer 45 min."],
+      cuisson: "Long simmer builds deep energy.",
+      calories: 520
+    },
+    diner: {
+      nom: "Barley-leek soup",
+      ingredients: ["60 g barley","1 leek","water","oil","salt"],
+      preparation: ["Cook barley, add leek, simmer until soft."],
+      cuisson: "Warm and grounding evening meal.",
+      calories: 260
+    }
+  },
+  ar: {
+    title: "الجدي – الصبر والبنية القوية",
+    petit_dej: {
+      nom: "كينوا بالتمر والكاكاو",
+      ingredients: ["60غ كينوا","200 مل حليب نباتي","تمرتان","ملعقة كاكاو صغيرة","قرفة"],
+      preparation: ["يُطهى الكينوا 15 دقيقة بالحليب ثم يُضاف التمر والكاكاو."],
+      cuisson: "طهي بطيء يمنح تركيزًا وطاقة مستقرة.",
+      calories: 350
+    },
+    dejeuner: {
+      nom: "يخنة لحم بالخضار الجذرية",
+      ingredients: ["150غ لحم","جزر","لفت","بصل","أعشاب","زيت"],
+      preparation: ["يُحمّر اللحم والبصل ثم تُضاف الخضار وتُطهى 45 دقيقة."],
+      cuisson: "طهي طويل يعزز التحمل الجسدي.",
+      calories: 520
+    },
+    diner: {
+      nom: "شوربة شعير وكراث",
+      ingredients: ["60غ شعير","كراث","ماء","زيت","ملح"],
+      preparation: ["يُطهى الشعير ثم يُضاف الكراث ويُطهى حتى النعومة."],
+      cuisson: "عشاء دافئ مغذٍّ يمنح هدوءاً.",
+      calories: 260
+    }
+  }
+},
+
+/* VERSEAU ♒ */
+"aquarius": {
+  fr: {
+    title: "Verseau – Originalité et fraîcheur mentale",
+    petit_dej: {
+      nom: "Chia bowl kiwi-coco",
+      ingredients: ["2 c. à s. graines de chia","150 ml lait coco","1 kiwi","1 c. à c. miel"],
+      preparation: [
+        "Faites gonfler les graines de chia dans le lait 2h.",
+        "Ajoutez kiwi tranché et miel avant de servir."
+      ],
+      cuisson: "Aucune cuisson : active la clarté mentale du Verseau.",
+      calories: 290
+    },
+    dejeuner: {
+      nom: "Wrap végétarien méditerranéen",
+      ingredients: ["tortilla complète","houmous","poivrons grillés","roquette","feta"],
+      preparation: ["Garnissez la tortilla de houmous et légumes, roulez, servez frais."],
+      cuisson: "Préparation froide, rapide et inventive.",
+      calories: 420
+    },
+    diner: {
+      nom: "Soupe froide concombre-menthe",
+      ingredients: ["1 concombre","yaourt nature","menthe","citron","sel"],
+      preparation: ["Mixez tous les ingrédients et servez frais."],
+      cuisson: "Sans cuisson : rafraîchit le système nerveux aérien du Verseau.",
+      calories: 180
+    }
+  },
+  en: {
+    title: "Aquarius – Originality and mental freshness",
+    petit_dej: {
+      nom: "Kiwi-coconut chia bowl",
+      ingredients: ["2 tbsp chia","150 ml coconut milk","1 kiwi","1 tsp honey"],
+      preparation: ["Soak chia 2h, top with kiwi and honey."],
+      cuisson: "No cooking, awakens creativity.",
+      calories: 290
+    },
+    dejeuner: {
+      nom: "Mediterranean veggie wrap",
+      ingredients: ["whole tortilla","hummus","grilled peppers","arugula","feta"],
+      preparation: ["Fill tortilla, roll, serve fresh."],
+      cuisson: "Cold prep, spontaneous meal.",
+      calories: 420
+    },
+    diner: {
+      nom: "Cold cucumber-mint soup",
+      ingredients: ["1 cucumber","plain yogurt","mint","lemon","salt"],
+      preparation: ["Blend all ingredients, chill before serving."],
+      cuisson: "No heat: cools the Air element.",
+      calories: 180
+    }
+  },
+  ar: {
+    title: "الدلو – الإبداع والانتعاش الذهني",
+    petit_dej: {
+      nom: "وعاء شيا بالكيوي وجوز الهند",
+      ingredients: ["ملعقتان شيا","150 مل حليب جوز الهند","كيوي","عسل"],
+      preparation: ["تُنقع الشيا ساعتين وتُقدَّم مع الكيوي والعسل."],
+      cuisson: "بدون طهي – ينشّط الذكاء والابتكار.",
+      calories: 290
+    },
+    dejeuner: {
+      nom: "راب نباتي متوسطي",
+      ingredients: ["تورتيلا قمح كامل","حمص مهروس","فلفل مشوي","جرجير","جبنة فيتا"],
+      preparation: ["تُملأ التورتيلا وتُلف وتُقدَّم باردة."],
+      cuisson: "تحضير بارد سريع ومبدع.",
+      calories: 420
+    },
+    diner: {
+      nom: "شوربة باردة بالخيار والنعناع",
+      ingredients: ["خيار","لبن زبادي","نعناع","ليمون","ملح"],
+      preparation: ["تُخلط المكونات وتُبرّد قبل التقديم."],
+      cuisson: "بدون طهي يبرد طاقة الهواء.",
+      calories: 180
+    }
+  }
+},
+
+/* POISSONS ♓ */
+"pisces": {
+  fr: {
+    title: "Poissons – Intuition et douceur aquatique",
+    petit_dej: {
+      nom: "Smoothie bleu spiruline-banane",
+      ingredients: ["1 banane","200 ml lait d’amande","½ c. à c. spiruline","miel"],
+      preparation: ["Mixez tous les ingrédients, servez frais."],
+      cuisson: "Sans cuisson – favorise la créativité et l’intuition.",
+      calories: 260
+    },
+    dejeuner: {
+      nom: "Filet de poisson au lait de coco",
+      ingredients: ["1 filet poisson","lait coco","citron vert","gingembre","sel"],
+      preparation: ["Cuire le poisson 10 min, ajouter lait coco et citron."],
+      cuisson: "Cuisson douce et onctueuse, typique des signes d’Eau.",
+      calories: 480
+    },
+    diner: {
+      nom: "Velouté de patate douce et gingembre",
+      ingredients: ["200 g patate douce","gingembre","eau","sel"],
+      preparation: ["Cuire 20 min, mixer, servir chaud."],
+      cuisson: "Chaleur apaisante avant le sommeil.",
+      calories: 240
+    }
+  },
+  en: {
+    title: "Pisces – Intuition and aquatic softness",
+    petit_dej: {
+      nom: "Blue spirulina banana smoothie",
+      ingredients: ["1 banana","200 ml almond milk","½ tsp spirulina","honey"],
+      preparation: ["Blend and serve fresh."],
+      cuisson: "Raw prep for dreamy inspiration.",
+      calories: 260
+    },
+    dejeuner: {
+      nom: "Coconut fish fillet",
+      ingredients: ["1 fish fillet","coconut milk","lime","ginger","salt"],
+      preparation: ["Cook fish 10 min, add coconut milk, finish with lime."],
+      cuisson: "Soft simmer connects with Water energy.",
+      calories: 480
+    },
+    diner: {
+      nom: "Sweet potato ginger soup",
+      ingredients: ["200 g sweet potato","ginger","water","salt"],
+      preparation: ["Boil 20 min, blend smooth."],
+      cuisson: "Warm and calming, perfect before rest.",
+      calories: 240
+    }
+  },
+  ar: {
+    title: "الحوت – الإلهام والنعومة المائية",
+    petit_dej: {
+      nom: "سموثي سبيرولينا زرقاء بالموز",
+      ingredients: ["موزة","200 مل حليب لوز","½ ملعقة سبيرولينا","عسل"],
+      preparation: ["تُخلط المكونات وتُقدَّم باردة."],
+      cuisson: "بدون طهي – يُحفّز الخيال والحدس.",
+      calories: 260
+    },
+    dejeuner: {
+      nom: "سمك بحليب جوز الهند",
+      ingredients: ["شريحة سمك","حليب جوز الهند","ليمون أخضر","زنجبيل","ملح"],
+      preparation: ["يُطهى السمك 10 دقائق ويُضاف الحليب والليمون."],
+      cuisson: "طهي ناعم يتناغم مع طاقة الماء.",
+      calories: 480
+    },
+    diner: {
+      nom: "شوربة بطاطا حلوة وزنجبيل",
+      ingredients: ["200غ بطاطا حلوة","زنجبيل","ماء","ملح"],
+      preparation: ["تُطهى 20 دقيقة وتُخلط وتُقدَّم دافئة."],
+      cuisson: "حرارة مهدّئة قبل النوم.",
+      calories: 240
+    }
+  }
+},
+
+/* 🌿 BOISSONS UNIVERSELLES */
+"boissons": {
+  fr: {
+    title: "Boissons universelles – Vitalité et équilibre",
+    recettes: [
+      {
+        nom: "Bissap (hibiscus rouge)",
+        effet: "Tonique et antioxydant",
+        ingredients: ["Feuilles d’hibiscus séchées","sucre roux","menthe","eau"],
+        preparation: ["Faire bouillir 10 min, filtrer, sucrer et refroidir."]
+      },
+      {
+        nom: "Bouye (fruit du baobab)",
+        effet: "Riche en vitamine C, renforce l’immunité",
+        ingredients: ["Poudre de bouye","lait","sucre","vanille"],
+        preparation: ["Mélanger à froid, laisser épaissir, servir frais."]
+      },
+      {
+       nom: "Gingembre-citron",
+        effet: "Stimulant digestif et réchauffant",
+        ingredients: ["Gingembre frais","jus de citron","miel","eau chaude"],
+        preparation: ["Infuser gingembre 10 min, ajouter citron et miel."]
+      }
+    ]
+  },
+  en: {
+    title: "Universal Drinks – Vitality & Balance",
+    recettes: [
+      { nom: "Bissap (red hibiscus)", effet: "Antioxidant tonic", ingredients: ["Dried hibiscus","brown sugar","mint","water"], preparation: ["Boil 10 min, strain, cool."] },
+      { nom: "Bouye (baobab fruit)", effet: "High in vitamin C", ingredients: ["Baobab powder","milk","sugar","vanilla"], preparation: ["Mix cold, let thicken, serve chilled."] },
+      { nom: "Ginger-lemon", effet: "Digestive stimulant", ingredients: ["Fresh ginger","lemon juice","honey","hot water"], preparation: ["Infuse ginger 10 min, add lemon and honey."] }
+    ]
+  },
+  ar: {
+    title: "المشروبات العالمية – الحيوية والتوازن",
+    recettes: [
+      { nom: "بيساب (الكركديه الأحمر)", effet: "منشّط ومضاد للأكسدة", ingredients: ["أوراق كركديه مجففة","سكر بني","نعناع","ماء"], preparation: ["يُغلى 10 دقائق ويُصفّى ويُقدَّم بارداً."] },
+      { nom: "بووي (فاكهة الباوباب)", effet: "غني بفيتامين C", ingredients: ["مسحوق باوباب","حليب","سكر","فانيلا"], preparation: ["يُخلط بارداً ويُترك ليكثف ويُقدَّم بارداً."] },
+      { nom: "زنجبيل-ليمون", effet: "منشّط للهضم ودافئ", ingredients: ["زنجبيل طازج","عصير ليمون","عسل","ماء ساخن"], preparation: ["يُنقع الزنجبيل 10 دقائق ثم يُضاف الليمون والعسل."] }
+    ]
+  }
+}
+},
 
 /* === 4. Drinks planétaires rapides ============================ */
 const DRINKS_PLANETAIRES = {
