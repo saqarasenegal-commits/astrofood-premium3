@@ -1,0 +1,32 @@
+ const API_URL = "https://astrofood-vercel.app/api/astrofood-ai";
+
+      const out = document.getElementById("ai-output");
+
+      document.getElementById("btn-chat").addEventListener("click", async () => {
+        const message = document.getElementById("chat-input").value.trim();
+        if (!message) return alert("Écris un message !");
+        out.textContent = "⏳ Le Chef-AI réfléchit...";
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mode: "chat", message })
+        });
+        const data = await res.json();
+        out.textContent = data.text || JSON.stringify(data, null, 2);
+      });
+
+      document.getElementById("btn-recipe").addEventListener("click", async () => {
+        const sign = document.getElementById("sign").value;
+        const lang = document.getElementById("lang").value;
+        out.textContent = "🍳 Génération de la recette pour " + sign + "...";
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mode: "recipe", sign, lang })
+        });
+        const data = await res.json();
+        out.textContent = data.text || JSON.stringify(data, null, 2);
+      });
+    </script>
+  </body>
+</html>
